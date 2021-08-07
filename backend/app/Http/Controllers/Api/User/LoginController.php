@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Auth;
@@ -17,30 +18,22 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, UserService $userService)
     {
-        $rules = [
+        //
+        $requestData = $this->validate($request, [
             'email' => 'required|string',
             'password' => 'required|min:6',
-        ];
+        ]);
 
         //
-        $request->validate($rules);
+        $loginResult = $userService->login($requestData->email, $requestData->password);
 
-        //
-        $data = $request->only(array_keys($rules));
-
-        //
-        $user = User::where('email', $data['email'])->first();
-
-        if ($user==null || !auth()->attempt($data))
-        {
-            throw new HttpException( Response::HTTP_UNAUTHORIZED, "Usuário e/ou senha inválido(s)");
-        }
-
-        //
-        $token = auth()->user()->createToken('authToken')->accessToken;
-
-        return $this->jsonResonse("Seja bem-vindo {$user->name}!", Response::HTTP_OK, $token, auth()->user());
+        return $this->jsonResonse(
+            "Seja bem-vindo {$loginResult->user->name}!",
+            Response::HTTP_OK,
+            $loginResult->token,
+            $loginResult->user
+        );
     }
 }

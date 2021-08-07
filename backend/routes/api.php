@@ -1,9 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\User\LoginController;
+use App\Http\Controllers\Api\User\LogoutController;
 use App\Http\Controllers\Api\User\RegisterController;
-use Fruitcake\Cors\HandleCors;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(HandleCors::class)->prefix('users')->group(function () {
+Route::prefix('users')->group(function ($route) {
     Route::post('/register', RegisterController::class)->name('user-register');
     Route::post('/login', LoginController::class)->name('user-login');
+
+    Route::middleware('auth:api')->group(function () {
+        Route::get('/logout', LogoutController::class)->name('user-logout');
+    });
 });
