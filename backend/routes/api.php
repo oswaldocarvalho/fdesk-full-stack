@@ -1,8 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\User\LoginController;
-use App\Http\Controllers\Api\User\LogoutController;
-use App\Http\Controllers\Api\User\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,10 +14,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('users')->group(function ($route) {
-    Route::post('/register', RegisterController::class)->name('user-register');
-    Route::post('/login', LoginController::class)->name('user-login');
+    Route::post('/register', \App\Http\Controllers\Api\User\RegisterController::class)->name('user-register');
+    Route::post('/login', \App\Http\Controllers\Api\User\LoginController::class)->name('user-login');
 
     Route::middleware('auth:api')->group(function () {
-        Route::get('/logout', LogoutController::class)->name('user-logout');
+        Route::get('/logout', \App\Http\Controllers\Api\User\LogoutController::class)->name('user-logout');
     });
 });
+
+Route::prefix('todos')->middleware('auth:api')->group(function ($route) {
+    Route::post('/', \App\Http\Controllers\Api\Todo\AddController::class)->name('todo-add');
+    Route::get('/', \App\Http\Controllers\Api\Todo\ListController::class)->name('todo-list');
+    Route::patch('/{id}', \App\Http\Controllers\Api\Todo\UpdateController::class)->name('todo-update');
+    Route::delete('/{id}', \App\Http\Controllers\Api\Todo\DeleteController::class)->name('todo-delete');
+
+    Route::patch('/{id}/toggle-completed', \App\Http\Controllers\Api\Todo\ToggleCompletedController::class)->name('todo-update');
+});
+
+

@@ -3,7 +3,6 @@
 
 namespace App\Services;
 
-
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -64,7 +63,7 @@ class UserService
      */
     public function logout():void
     {
-        $user = Auth::guard("api")->user()->token();
-        $user->revoke();
+        $token = Auth::guard("api")->user()->token();
+        $token->revoke();
     }
 }
