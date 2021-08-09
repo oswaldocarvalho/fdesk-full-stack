@@ -4,7 +4,8 @@
 namespace App\Services;
 
 use App\Models\Todo;
-use App\Models\User;
+use Exception;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class TodoService
 {
-    private User $user;
+    private Authenticatable|null $user;
 
     /**
      * TodoService constructor.
@@ -78,7 +79,7 @@ class TodoService
 
             DB::commit();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             throw new HttpException( Response::HTTP_INTERNAL_SERVER_ERROR, "Erro ao atualizar o registro");
         }

@@ -3,22 +3,21 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Auth;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class LoginController extends Controller
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param UserService $userService
+     * @return JsonResponse
      */
-    public function __invoke(Request $request, UserService $userService)
+    public function __invoke(Request $request, UserService $userService): JsonResponse
     {
         //
         $requestData = $this->validateAndGetData($request, [
@@ -34,6 +33,6 @@ class LoginController extends Controller
             "Seja bem-vindo {$loginResult->user->name}!",
             Response::HTTP_OK,
             array_merge($loginResult->user->toArray(), [$loginResult->token])
-        )->cookie(cookie('token', $loginResult->token, path: "/", httpOnly: true, secure: (env("APP_ENV")!='local')));
+        )->cookie(cookie('token', $loginResult->token, path: "/", secure: (env("APP_ENV")!='local'), httpOnly: true));
     }
 }

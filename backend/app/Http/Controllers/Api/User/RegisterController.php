@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -12,10 +13,11 @@ class RegisterController extends Controller
     /**
      * Handle the incoming request.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param UserService $userService
+     * @return JsonResponse
      */
-    public function __invoke(Request $request, UserService $userService)
+    public function __invoke(Request $request, UserService $userService):JsonResponse
     {
         // validation rules
         $requestData = $this->validateAndGetData($request, [

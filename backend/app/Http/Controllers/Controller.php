@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
@@ -16,11 +17,10 @@ class Controller extends BaseController
     /**
      * Resposta padronizada para todos os requests da api
      *
-     * @param string $message
+     * @param string|null $message
      * @param int $status
-     * @param string|null $token
      * @param null $data
-     * @return JsonResponse
+     * @return Response|JsonResponse
      */
     public function jsonResponse(string $message=null, int $status=200, $data = null): JsonResponse
     {
@@ -47,7 +47,7 @@ class Controller extends BaseController
      *
      * @param Request $request
      * @param array $rules
-     * @return array
+     * @return object
      */
     public function validateAndGetData(Request $request, array $rules):object
     {
