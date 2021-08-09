@@ -20,9 +20,10 @@ class LogoutController extends Controller
         //
         $userService->logout();
 
+        // retorna o json e remove o cookie
         return $this->jsonResonse(
             "Até logo",
             Response::HTTP_OK
-        );
+        )->cookie(cookie('token', null, path: "/"));
     }
 }

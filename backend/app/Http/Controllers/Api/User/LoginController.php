@@ -21,7 +21,7 @@ class LoginController extends Controller
     public function __invoke(Request $request, UserService $userService)
     {
         //
-        $requestData = $this->validate($request, [
+        $requestData = $this->validateAndGetData($request, [
             'email' => 'required|string',
             'password' => 'required|min:6',
         ]);
@@ -29,11 +29,11 @@ class LoginController extends Controller
         //
         $loginResult = $userService->login($requestData->email, $requestData->password);
 
+        // cria um HttpOnly cookie no response para o react
         return $this->jsonResonse(
             "Seja bem-vindo {$loginResult->user->name}!",
             Response::HTTP_OK,
-            $loginResult->token,
-            $loginResult->user
-        );
+            array_merge($loginResult->user->toArray(), [$loginResult->token])
+        )->cookie(cookie('token', $loginResult->token, path: "/", httpOnly: true, secure: (env("APP_ENV")!='local')));
     }
 }

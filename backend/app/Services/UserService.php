@@ -23,7 +23,6 @@ class UserService
     {
         //
         $user = User::where('email', $email)->first();
-
         if ($user==null || !auth()->attempt(['email' => $email, 'password' => $password]))
         {
             throw new HttpException( Response::HTTP_UNAUTHORIZED, "Usuário e/ou senha inválido(s)");

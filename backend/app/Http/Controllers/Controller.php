@@ -22,17 +22,14 @@ class Controller extends BaseController
      * @param null $data
      * @return JsonResponse
      */
-    public function jsonResonse(string $message, int $status=200, string $token=null, $data = null): JsonResponse
+    public function jsonResonse(string $message, int $status=200, $data = null): JsonResponse
     {
+        //
         $responseData = [
             "message" => $message
         ];
 
-        if ($token)
-        {
-            $responseData["token"] = $token;
-        }
-
+        //
         if ($data)
         {
             $responseData["data"] = $data;
@@ -48,12 +45,11 @@ class Controller extends BaseController
      * @param array $rules
      * @return array
      */
-    public function validate(Request $request, array $rules):object
+    public function validateAndGetData(Request $request, array $rules):object
     {
         //
         $request->validate($rules);
 
-        //
         return (object)$request->only(array_keys($rules));
     }
 }

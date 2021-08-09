@@ -18,7 +18,7 @@ class RegisterController extends Controller
     public function __invoke(Request $request, UserService $userService)
     {
         // validation rules
-        $requestData = $this->validate($request, [
+        $requestData = $this->validateAndGetData($request, [
             'name' => 'required|string',
             'email' => 'required|string|unique:users',
             'password' => 'required|min:6|confirmed',
