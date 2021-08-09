@@ -30,7 +30,7 @@ class LoginController extends Controller
         $loginResult = $userService->login($requestData->email, $requestData->password);
 
         // cria um HttpOnly cookie no response para o react
-        return $this->jsonResonse(
+        return $this->jsonResponse(
             "Seja bem-vindo {$loginResult->user->name}!",
             Response::HTTP_OK,
             array_merge($loginResult->user->toArray(), [$loginResult->token])

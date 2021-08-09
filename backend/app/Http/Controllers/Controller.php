@@ -22,12 +22,16 @@ class Controller extends BaseController
      * @param null $data
      * @return JsonResponse
      */
-    public function jsonResonse(string $message, int $status=200, $data = null): JsonResponse
+    public function jsonResponse(string $message=null, int $status=200, $data = null): JsonResponse
     {
         //
-        $responseData = [
-            "message" => $message
-        ];
+        $responseData = [];
+
+        //
+        if ($message)
+        {
+            $responseData["message"] = $message;
+        }
 
         //
         if ($data)

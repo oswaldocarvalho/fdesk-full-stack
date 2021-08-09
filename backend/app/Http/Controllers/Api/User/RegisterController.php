@@ -27,6 +27,6 @@ class RegisterController extends Controller
         //
         $userService->register($requestData->name, $requestData->email, $requestData->password);
 
-        return $this->jsonResonse("Usuário criado com sucesso", Response::HTTP_CREATED);
+        return $this->jsonResponse("Usuário criado com sucesso", Response::HTTP_CREATED);
     }
 }
