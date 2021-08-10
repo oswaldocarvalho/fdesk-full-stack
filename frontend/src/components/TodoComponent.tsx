@@ -16,15 +16,18 @@ export default class TodoComponent extends BaseComponent {
             showModal:false,
             newTodo: ''
         }
-
-        console.log('construct novamente ?')
     }
 
     toggleCompleted = () => {
         HttpService.patchData(`todos/${this.state.id}/toggle-completed` , null, (success:boolean, result:any) => {
             if (success) {
-                console.log('entrou')
                 this.setState({completed_at: result.data.completed_at})
+
+                this.dispatchEvent('onTodoChange', {
+                    id: this.state.id,
+                    completed_at: this.state.completed_at,
+                    deleted: this.state.deleted
+                })
             }
         })
     }
@@ -37,6 +40,12 @@ export default class TodoComponent extends BaseComponent {
         HttpService.deleteData(`todos/${this.state.id}`, (success:boolean, result:any) => {
             if (success) {
                 this.setState({deleted: true})
+
+                this.dispatchEvent('onTodoChange', {
+                    id: this.state.id,
+                    completed_at: this.state.completed_at,
+                    deleted: this.state.deleted
+                })
             }
         })
     }

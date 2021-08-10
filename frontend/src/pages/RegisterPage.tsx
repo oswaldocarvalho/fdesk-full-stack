@@ -30,7 +30,7 @@ export default class RegisterPage extends BaseComponent {
             password_confirmation:this.state.password_confirmation},
             (success:boolean, result:any) => {
                 if (!success) {
-                    this.setFormErrors(result.errors)
+                    this.setFormErrors(result)
                 }
 
                 this.setState({success: success})
@@ -46,6 +46,8 @@ export default class RegisterPage extends BaseComponent {
         return (
             <Container>
                 <PageTitleComponent title="Nova conta" />
+
+                {this.getFormError('message')}
 
                 <Form onChange={this.handleInputChange} onSubmit={this.formSubmit} method="post">
                     <Form.Group className="mb-3" controlId="formBasicEmail">

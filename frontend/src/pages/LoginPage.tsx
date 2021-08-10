@@ -22,7 +22,7 @@ export default class LoginPage extends BaseComponent {
         HttpService.postData('users/login', {email: this.state.email, password: this.state.password},
             (success:boolean, result:any) => {
                 if (!success) {
-                    this.setFormErrors(result.errors)
+                    this.setFormErrors(result)
                 }
 
                 this.setState({success: success})
@@ -38,6 +38,8 @@ export default class LoginPage extends BaseComponent {
         return (
             <Container>
                 <PageTitleComponent title="Login" />
+
+                {this.getFormError('message')}
 
                 <Form onChange={this.handleInputChange} onSubmit={this.formSubmit} method="post">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
