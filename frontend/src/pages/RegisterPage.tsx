@@ -10,18 +10,32 @@ export default class RegisterPage extends BaseComponent {
         super(props)
 
         this.state = {
+            name: null,
             email: null,
             password: null,
-            success:false
+            password_confirmation: null,
+
+            success:false,
+            errors: []
         }
     }
 
     formSubmit(event:any) {
         super.formSubmit(event);
 
-        HttpService.postData('users/register', this.state, (success:boolean) => {
-            this.setState({success: success})
-        })
+        HttpService.postData('users/register', {
+            name: this.state.name,
+            email: this.state.email,
+            password:this.state.password,
+            password_confirmation:this.state.password_confirmation},
+            (success:boolean, result:any) => {
+                if (!success) {
+                    this.setFormErrors(result.errors)
+                }
+
+                this.setState({success: success})
+            }
+        )
     }
 
     render() {
@@ -37,11 +51,13 @@ export default class RegisterPage extends BaseComponent {
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Nome completo</Form.Label>
                         <Form.Control type="text" placeholder="Nome completo" name="name" />
+                        {this.getFormError('name')}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
                         <Form.Control type="email" placeholder="Enter email" name="email" />
+                        {this.getFormError('email')}
                     </Form.Group>
 
                     <Row>
@@ -49,6 +65,7 @@ export default class RegisterPage extends BaseComponent {
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" placeholder="Password" name="password" />
+                                {this.getFormError('password')}
                             </Form.Group>
                         </Col>
                         <Col>

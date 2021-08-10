@@ -30,6 +30,10 @@ export default class TodoComponent extends BaseComponent {
     }
 
     deleteTodo = () => {
+        if (!window.confirm('Deseja realmente apagar a tarefa?')) {
+            return
+        }
+
         HttpService.deleteData(`todos/${this.state.id}`, (success:boolean, result:any) => {
             if (success) {
                 this.setState({deleted: true})

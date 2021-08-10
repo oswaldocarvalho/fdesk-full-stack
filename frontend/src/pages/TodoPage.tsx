@@ -1,9 +1,8 @@
-import {Alert, Button, ButtonGroup, Col, Container, Form, FormControl, InputGroup, Row} from "react-bootstrap";
+import {Alert, Button, Container, Form, InputGroup} from "react-bootstrap";
 import NavComponent from "../components/NavComponent";
 import BaseComponent from "../components/BaseComponent";
 import HttpService from "../services/HttpService";
 import TodoComponent from "../components/TodoComponent";
-import {CheckLg, PencilFill, Trash, XLg} from "react-bootstrap-icons";
 import PageTitleComponent from "../components/PageTitleComponent";
 
 export default class DashboardPage extends BaseComponent {
