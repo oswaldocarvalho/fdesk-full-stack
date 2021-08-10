@@ -2,6 +2,7 @@ import {Button, Container, Form, Nav} from "react-bootstrap";
 import BaseComponent from "../components/BaseComponent";
 import HttpService from "../services/HttpService";
 import {Redirect} from "react-router-dom";
+import PageTitleComponent from "../components/PageTitleComponent";
 
 export default class LoginPage extends BaseComponent {
 
@@ -30,8 +31,8 @@ export default class LoginPage extends BaseComponent {
 
         return (
             <Container>
-                <h1>Login</h1>
-                <hr />
+                <PageTitleComponent title="Login" />
+
                 <Form onChange={this.handleInputChange} onSubmit={this.formSubmit} method="post">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>

@@ -23,11 +23,18 @@ class TodoService
         $this->user = Auth::guard("api")->user();
     }
 
+    /**
+     * @return mixed
+     */
     public function listAll()
     {
         return Todo::where('user_id', $this->user->id)->orderBy('id')->get();
     }
 
+    /**
+     * @param string $todo
+     * @return Todo
+     */
     public function add(string $todo):Todo
     {
         return $this->user->todos()->create([
@@ -35,6 +42,10 @@ class TodoService
         ]);
     }
 
+    /**
+     * @param int $id
+     * @param string $todo
+     */
     public function update(int $id, string $todo):void
     {
         $affectedRows = $this->user->todos()->where('id', $id)->update([
@@ -47,6 +58,9 @@ class TodoService
         }
     }
 
+    /**
+     * @param int $id
+     */
     public function delete(int $id):void
     {
         $affectedRows = $this->user->todos()->where('id', $id)->delete();
@@ -57,6 +71,10 @@ class TodoService
         }
     }
 
+    /**
+     * @param int $id
+     * @return object
+     */
     public function toggleCompleted(int $id):object
     {
         $completed = null;
@@ -84,6 +102,6 @@ class TodoService
             throw new HttpException( Response::HTTP_INTERNAL_SERVER_ERROR, "Erro ao atualizar o registro");
         }
 
-        return (object)['completed' => $completed!==null];
+        return (object)['completed_at' => $completed];
     }
 }

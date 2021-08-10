@@ -2,6 +2,7 @@ import {Button, Col, Container, Form, Nav, Row} from "react-bootstrap";
 import HttpService from "../services/HttpService";
 import BaseComponent from "../components/BaseComponent";
 import {Redirect} from "react-router-dom";
+import PageTitleComponent from "../components/PageTitleComponent";
 
 export default class RegisterPage extends BaseComponent {
 
@@ -30,8 +31,8 @@ export default class RegisterPage extends BaseComponent {
 
         return (
             <Container>
-                <h1>Nova conta</h1>
-                <hr />
+                <PageTitleComponent title="Nova conta" />
+
                 <Form onChange={this.handleInputChange} onSubmit={this.formSubmit} method="post">
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Nome completo</Form.Label>

@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
+import TodoPage from "./pages/TodoPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/register" exact={true} component={RegisterPage}/>
 
             <Route path="/dashboard" exact={true} component={DashboardPage}/>
+            <Route path="/to-do" exact={true} component={TodoPage}/>
         </Switch>
     </BrowserRouter>
   );

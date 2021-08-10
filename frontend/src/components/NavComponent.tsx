@@ -27,11 +27,11 @@ export default class NavComponent extends BaseComponent {
         return (
             <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
                 <Container>
-                    <Navbar.Brand href="#home">TODO</Navbar.Brand>
+                    <Navbar.Brand href="/dashboard">FDesk</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link href="#features">Tarefas</Nav.Link>
+                            <Nav.Link href="/to-do">Lista de tarefas</Nav.Link>
                         </Nav>
                         <Nav>
                             <Nav.Link href="#deets">

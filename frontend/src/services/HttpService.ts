@@ -11,6 +11,14 @@ export default class HttpService
         this.request('GET', path, null, callback)
     }
 
+    public static patchData (path:string, data:any, callback: (success: boolean, result: any) => void):void {
+        this.request('PATCH', path, data, callback)
+    }
+
+    public static deleteData (path:string, callback: (success: boolean, result: any) => void):void {
+        this.request('DELETE', path, null, callback)
+    }
+
     private static request (method:string, path:string, data:any, callback: (success: boolean, result: any) => void):void {
 
         method = method.toUpperCase()
@@ -25,9 +33,7 @@ export default class HttpService
         }
 
         if (data) {
-            if (method==='POST') {
-                requestOptions.body = JSON.stringify(data)
-            }
+            requestOptions.body = JSON.stringify(data)
         }
 
         fetch(`${this.URL}/${path}`, requestOptions).then(
