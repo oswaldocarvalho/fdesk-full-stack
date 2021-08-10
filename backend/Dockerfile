@@ -82,7 +82,8 @@ COPY    /configs/api/start.sh           /start.sh
 EXPOSE  80
 
 #
-RUN     chown                           www-data:www-data * -R                                          && \
+RUN     touch                           /var/www/html/storage/logs/laravel.log                          && \
+        chown                           www-data:www-data * -R                                          && \
         composer                        install
 
 CMD     ["/start.sh"]
