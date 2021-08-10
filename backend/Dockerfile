@@ -81,6 +81,8 @@ COPY    /configs/api/start.sh           /start.sh
 
 EXPOSE  80
 
-RUN     composer                        install
+#
+RUN     chown                           www-data:www-data * -R                                          && \
+        composer                        install
 
 CMD     ["/start.sh"]
