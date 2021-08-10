@@ -81,8 +81,9 @@ COPY    /configs/api/start.sh           /start.sh
 
 EXPOSE  80
 
-#
+# Ajustes de permissão de arquivos
 RUN     touch                           /var/www/html/storage/logs/laravel.log                          && \
+        touch                           /var/www/html/database/database.sqlite                          && \
         chown                           www-data:www-data * -R                                          && \
         composer                        install
 
